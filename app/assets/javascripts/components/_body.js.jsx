@@ -23,6 +23,25 @@ var Body = React.createClass({
             }
         });
     },
+
+    handleUpdate: function (item) {
+        $.ajax({
+            url: `/api/v1/items/${item.id}`,
+            type: 'PUT',
+            data: {item: item},
+            success: () => {
+                this.updateItems(item);
+            }
+        })
+    },
+
+    updateItems: function (item) {
+        var items = this.state.items.filter((i) => { return i.id != item.id });
+        items.push(item);
+
+        this.setState({items: items });
+    },
+
     removeItemClient: function (id) {
         var newItems = this.state.items.filter(function (item) {
             return item.id != id;
@@ -37,7 +56,7 @@ var Body = React.createClass({
         return (
             <div>
                 <NewItem handleSubmit={this.handleSubmit}/>
-                <AllItems items={this.state.items} handleDelete={this.handleDelete}/>
+                <AllItems items={this.state.items} handleDelete={this.handleDelete} onUpdate={this.handleUpdate}/>
             </div>
         )
     }
