@@ -2,7 +2,7 @@ var NewItem = React.createClass({
     handleClick: function () {
         var name = this.refs.name.value;
         var description = this.refs.description.value;
-        self=this;
+        self = this;
         $.ajax({
             url: '/api/v1/items',
             type: 'POST',
